@@ -18,13 +18,15 @@ async def lifespan(app: FastAPI):
     yield
 
 
+_docs_enabled = settings.ENVIRONMENT == "development"
+
 app = FastAPI(
     title="Sentinel API",
     description="Cloud Security & Threat Detection Platform",
     version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc",
-    openapi_url="/openapi.json",
+    docs_url="/docs" if _docs_enabled else None,
+    redoc_url="/redoc" if _docs_enabled else None,
+    openapi_url="/openapi.json" if _docs_enabled else None,
     lifespan=lifespan,
 )
 
